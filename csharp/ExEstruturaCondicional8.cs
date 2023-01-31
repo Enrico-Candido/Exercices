@@ -11,7 +11,7 @@ namespace ExEstruturaCondicional8 {
             if (valor > 2000 && valor <= 3000) {
                 valor = (valor - 2000.01) * 8 / 100;
             }
-            else if (valor <= 4500) {
+            else if (valor > 3000 && valor <= 4500) {
                 valor = 999.99 * 8 / 100 + (valor - 3000.01) * 18 / 100;
             }
             else if (valor > 4500) {
