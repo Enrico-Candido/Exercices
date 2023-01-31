@@ -18,15 +18,9 @@ namespace ExEstruturaCondicional8 {
                 valor = 999.99 * 8 / 100 + 1499.99 * 18 / 100 + (valor - 4500.01) * 28 / 100;
             }
 
-            if (guarda < 0) {
-                Console.WriteLine("Digite um valor positivo");
-            }
-            else if (guarda <= 2000) {
-                Console.WriteLine("Isento");
-            }
-            else if (guarda > 2000){
-                Console.WriteLine("R$ " + valor.ToString("F2"));
-            }
+            if (guarda < 0) Console.WriteLine("Digite um valor positivo");
+            else if (guarda <= 2000) Console.WriteLine("Isento");
+            else Console.WriteLine("R$ " + valor.ToString("F2"));
         }
     }
 }
