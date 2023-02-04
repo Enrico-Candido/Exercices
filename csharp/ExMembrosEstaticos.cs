@@ -15,3 +15,17 @@ namespace ExMembrosEstaticos1 {
         }
     }
 }
+
+/*
+ Classe ConversorMoeda usada
+
+using System;
+
+namespace ExMembrosEstaticos1 {
+    class ConversorMoeda {
+        public static double Conversao(double Cotacao, double QtdeDolares) {
+            return Cotacao * QtdeDolares + 6 * Cotacao * QtdeDolares / 100;
+        }
+    }
+}
+ */
