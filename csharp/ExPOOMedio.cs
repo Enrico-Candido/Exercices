@@ -71,6 +71,7 @@ namespace ExPOOMedio {
         public void Saque(double quantia) {
             Saldo -= quantia + 5;
         }
+
         public override string ToString() {
             return $"Conta: {NumeroConta}, Titular: {Nome}, Saldo: $ {Saldo.ToString("F2")}";
         }
