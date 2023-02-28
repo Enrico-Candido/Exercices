@@ -1,0 +1,68 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. PROG002.
+       AUTHOR.     ENRICO CANDIDO.
+
+       ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+       SOURCE-COMPUTER. PC.
+       OBJECT-COMPUTER. PC.
+       SPECIAL-NAMES. DECIMAL-POINT IS COMMA.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT ALUNOS ASSIGN TO DISK 
+           ORGANIZATION IS LINE SEQUENTIAL.
+           SELECT BACKALU ASSIGN TO DISK 
+           ORGANIZATION IS LINE SEQUENTIAL. 
+           SELECT ALUNOTA ASSIGN TO DISK 
+           ORGANIZATION IS LINE SEQUENTIAL.
+
+       DATA DIVISION.
+       FILE SECTION.
+
+       FD  ALUNOS LABEL RECORDS STANDARD 
+           VALUE OF FILE-ID IS "ALUNOS.DAT".
+       01  REGALU.
+           05 CODALU     PIC 9(03).
+           05 NOMALU     PIC X(20).
+           05 NOTALU     PIC 9(02).
+
+       FD  BACKALU LABEL RECORD STANDARD 
+           VALUE OF FILE-ID IS "BACKALU.DAT".
+       01  REGBACK.
+           07 BKCODALU   PIC 9(03).
+           07 BKNOMALU   PIC X(20).
+           07 BKNOT      PIC 9(02).
+
+       FD  ALUNOTA LABEL RECORD STANDARD 
+           VALUE OF FILE-ID IS "ALUNOTA.DAT".
+       01  REGNOT.
+           15 NOME       PIC X(20).
+           15 NOTA       PIC 9(02).
+
+       WORKING-STORAGE SECTION.
+       77  FIM           PIC X VALUE SPACES.   
+       PROCEDURE DIVISION.
+       CONTROLE.
+           PERFORM ABRIR.
+           PERFORM LEITURA.
+           PERFORM ROTINA
+                   UNTIL FIM EQUAL "*".
+           PERFORM FECHAR.
+           STOP RUN.
+       ABRIR.
+           OPEN INPUT ALUNOS
+                OUTPUT BACKALU ALUNOTA.
+       LEITURA.
+           READ ALUNOS
+                 AT END MOVE "*" TO FIM.
+       ROTINA.
+           WRITE REGBACK FROM REGALU.
+           PERFORM GRAVAR.
+           PERFORM LEITURA.
+       GRAVAR.
+           MOVE NOMALU TO NOME.
+           MOVE NOTALU TO NOTA.
+           WRITE REGNOT.
+       FECHAR.
+           CLOSE ALUNOS BACKALU ALUNOTA.
+       
