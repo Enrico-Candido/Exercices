@@ -1,0 +1,68 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID.    EX05.
+       AUTHOR.        ENRICO CANDIDO.
+       INSTALLATION.  FATEC-SP.
+       DATE-WRITTEN.  15/10/2020.
+       DATE-COMPILED.
+       SECURITY. APENAS O AUTOR PODE MODIFICA-LO.    
+
+       ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+       SOURCE-COMPUTER.   PC.
+       OBJECT-COMPUTER.   PC.
+       SPECIAL-NAMES.          DECIMAL-POINT IS COMMA.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+
+           SELECT CADPAG ASSIGN TO DISK
+           ORGANIZATION IS LINE SEQUENTIAL.
+
+           SELECT CADREC ASSIGN TO DISK
+           ORGANIZATION IS LINE SEQUENTIAL. 
+ 
+       DATA DIVISION.
+       FILE SECTION.
+       FD  CADPAG
+           LABEL RECORD ARE STANDARD
+           VALUE OF FILE-ID IS "CADPAG.DAT".
+       01  REGPAG.
+           02 CODPAG          PIC 9(05).
+           02 NOMEPAG         PIC X(30).
+           02 PARCELA         OCCURS 10 TIMES PIC 9(05)V9(02).
+       FD  CADREC 
+           LABEL RECORD ARE STANDARD 
+           VALUE OF FILE-ID IS "NOTAS.DAT".
+       01  REGREC.
+           03 CODREC         PIC 9(05).
+           03 NOMEREC        PIC X(30). 
+           03 TOTALREC       PIC 9(09)V9(02).
+
+       WORKING-STORAGE SECTION.
+       77  FIMARQ             PIC X        VALUE SPACES.
+       77  CONT               PIC 9(02)    VALUE ZEROS.       
+
+       PROCEDURE DIVISION.
+       ROTINA-PRINCIPAL.
+           OPEN INPUT CADPAG OUTPUT CADREC.
+           PERFORM LEITURA.
+           PERFORM PRINCIPAL 
+                   UNTIL FIMARQ EQUAL "*".
+           CLOSE CADPAG CADREC.
+           STOP RUN.
+
+       LEITURA.
+           READ CADPAG AT END MOVE "*" TO FIMARQ.         
+
+       PRINCIPAL.
+           MOVE ZEROS TO TOTALREC.
+           MOVE 1 TO CONT.
+           PERFORM TOTALPAG UNTIL CONT EQUAL 11.
+           MOVE CODPAG TO CODREC.
+           MOVE NOMEPAG TO NOMEREC.
+           WRITE REGREC
+           PERFORM LEITURA.
+             
+       TOTALPAG.
+           COMPUTE TOTALREC = TOTALREC + PARCELA(CONT).
+           ADD 1 TO CONT.
+     
